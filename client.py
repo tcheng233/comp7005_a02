@@ -34,6 +34,8 @@ def connect_client_socket(server_ip, server_port):
 def send_request(client_socket, file_data):
     try:
         client_socket.sendall(file_data.encode('utf-8'))
+
+        client_socket.shutdown(socket.SHUT_WR)
     except Exception as e:
         print(f"Error: Unable to send request: {e}")
         client_socket.close()
@@ -82,7 +84,7 @@ def main():
             # Receive and print the server response
             response = receive_response(client_socket)
             if response:
-                print(f"Response for '{file_path}': {response}")
+                print(f"Response for '{file_path}', the alphabet count is : {response}")
             else:
                 print(f"Error: No response received for file '{file_path}'.")
 
