@@ -70,6 +70,7 @@ def main():
     # Process each file and send to server
     for file_path in file_paths:
         try:
+            client_socket = connect_client_socket(server_ip, server_port)
             with open(file_path, 'r', encoding='utf-8') as f:
                 file_data = f.read()
             
@@ -77,7 +78,6 @@ def main():
                 print(f"Warning: File '{file_path}' is empty. Sending empty content.")
             
             # Connect to the server
-            client_socket = connect_client_socket(server_ip, server_port)
             send_request(client_socket, file_data)
             print(f"Sent file data from '{file_path}' to server {server_ip}:{server_port}")
             
